@@ -3,9 +3,9 @@
   <header class="page-header">
     <h1>Order #<%= @order.id %></h1>
   </header>
-
-  <h3>Receipt for <%= @order.email %></h3>
+  
   <div class="order-summary jumbotron">
+    <h3>Receipt for <%= @order.email %></h3>
 
     <table class="table table-bordered">
       <thead>
@@ -18,25 +18,7 @@
       </thead>
       <tbody>
         <% @products_ordered.each do | product | %>
-          <tr>
-            <td>
-              <%= image_tag product.image.tiny %>
-            </td>
-            <td>
-              <h4><%= product.name %></h4>
-              <br>
-              <p><%= product.description %></p>
-            </td>
-            <td>
-              <%= humanized_money_with_symbol product.price %>
-            </td>
-            <td>
-              <%= product.quantity %>
-            </td>
-            <td>
-              <%= humanized_money_with_symbol product.price * product.quantity %>
-            </td>
-          </tr>
+          <%= render 'line_item', product: product %>
         <% end %>
       </tbody>
       
