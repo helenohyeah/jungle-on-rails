@@ -2,7 +2,13 @@ Rails.application.routes.draw do
   
   root to: 'products#index'
 
-  # renders a form for signup
+  # render form for login
+  get '/login' => 'sessions#new'
+  # login and logout
+  post '/logout' => 'sessions#create'
+  get '/logout' => 'sessions#destroy'
+
+  # render form for signup
   get '/signup' => 'users#new'
   # receives form and creates a new user
   post '/users' => 'users#create'
