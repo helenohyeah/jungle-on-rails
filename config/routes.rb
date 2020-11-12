@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # render form for login
   get '/login' => 'sessions#new'
   # login and logout
-  post '/logout' => 'sessions#create'
+  post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
 
   # render form for signup
