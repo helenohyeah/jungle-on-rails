@@ -11,14 +11,14 @@ class UsersController < ApplicationController
       session[:user_id] = user_id
       redirect_to '/'
     else
-      render '/signup'
+      render :new
     end
   end
 
   private
 
   def user_params
-    paras.require(:user).permit(
+    params.require(:user).permit(
       :first_name,
       :last_name,
       :email,
