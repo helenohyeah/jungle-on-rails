@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
 
-  REGEX_PATTERN = /\z(.+)@(.+)\z/
-
+  has_secure_password
   has_many :order
+  
+  REGEX_PATTERN = /\z(.+)@(.+)\z/
 
   validates :first_name, presence: true
   validates :last_name, presence: true
