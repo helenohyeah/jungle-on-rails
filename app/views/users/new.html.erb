@@ -38,13 +38,13 @@
         </div>
 
         <div class="form-group">
-          <%= form.label 'Password' %>
-          <%= form.text_field :password_digest, class: 'form-control' %>
+          <%= form.label :password %>
+          <%= form.text_field :password, class: 'form-control' %>
         </div>
 
         <div class="form-group">
-          <%= form.label 'Passworld Confirmation' %>
-          <%= form.text_field :password_digest, class: 'form-control' %>
+          <%= form.label :password_confirmation %>
+          <%= form.text_field :password_confirmation, class: 'form-control' %>
         </div>
 
         <%= form.submit 'Create Account', class: 'btn btn-primary' %>
