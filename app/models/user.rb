@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
   validates :email,
     format: { with: REGEX_PATTERN, message: "invalid" },
       uniqueness: { case_sensitive: false }
-  # validates :password, presence: true
-  # validates :password_confirmation, presence: true
+  validates :password, length: { minimum: 6 }
 
 end
