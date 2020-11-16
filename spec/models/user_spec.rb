@@ -23,37 +23,37 @@ RSpec.describe User, type: :model do
         user.password = nil
         user.save
         expect(user).to_not be_valid
-        expect(user.errors.messages[:password]).to eq ["can't be blank"]
+        expect(user.errors.full_messages).to eq ["Password can't be blank"]
       end
       
       it "returns error if email is nil" do
         user.email = nil
         user.save
         expect(user).to_not be_valid
-        expect(user.errors.messages[:email]).to eq ["invalid"]
+        expect(user.errors.full_messages).to eq ["Email invalid"]
       end
 
       it "returns error if first name is nil" do
         user.first_name = nil
         user.save
         expect(user).to_not be_valid
-        expect(user.errors.messages[:first_name]).to eq ["can't be blank"]
+        expect(user.errors.full_messages).to eq ["First name can't be blank"]
       end
   
       it "returns error if last name is nil" do
         user.last_name = nil
         user.save
         expect(user).to_not be_valid
-        expect(user.errors.messages[:last_name]).to eq ["can't be blank"]
+        expect(user.errors.full_messages).to eq ["Last name can't be blank"]
       end
     end
 
     context "Invalid fields" do
-      it "returns if password and password confirmation do not match" do
+      it "returns error if password and password confirmation do not match" do
         user.password_confirmation = '654321'
         user.save
         expect(user).to_not be_valid
-        expect(user.errors.messages[:password_confirmation]).to eq ["doesn't match Password"]
+        expect(user.errors.full_messages).to eq ["Password confirmation doesn't match Password"]
       end
   
       it "returns error if password is under 6 characters" do
@@ -61,14 +61,14 @@ RSpec.describe User, type: :model do
         user.password_confirmation = '123'
         user.save
         expect(user).to_not be_valid
-        expect(user.errors.messages[:password]).to eq ["is too short (minimum is 6 characters)"]
+        expect(user.errors.full_messages).to eq ["Password is too short (minimum is 6 characters)"]
       end
   
       it "returns error if email is not unique (not case sensitive)" do
         user.save
         other_user = User.create(first_name: 'Jane', last_name: 'Doe', email: 'JDOE@test.com', password: '123456', password_confirmation: '123456')
         expect(other_user).to_not be_valid
-        expect(other_user.errors.messages[:email]).to eq ["has already been taken"]
+        expect(other_user.errors.full_messages).to eq ["Email has already been taken"]
       end
     end
   end
@@ -81,22 +81,26 @@ RSpec.describe User, type: :model do
         expect(User.authenticate_with_credentials('jdoe@test.com', '123456')).to eq user
       end
 
-      it "returns the user given an email in the wrong case and valid password" do
-        raise
+      it "returns the user given an email in the wrong case" do
+        user.save
+        expect(User.authenticate_with_credentials('JDOE@test.com', '123456')).to eq user
       end
   
-      it "returns the user given an email with filler spaces and valid password" do
-        raise
+      it "returns the user given an email with filler spaces" do
+        user.save
+        expect(User.authenticate_with_credentials('  jdoe@test.com ', '123456')).to eq user
       end
     end
 
     context "Invalid credentials" do
       it "returns nil given an invalid email" do
-        raise
+        user.save
+        expect(User.authenticate_with_credentials('jdo@test.com', '123456')).to eq nil
       end
 
       it "returns nil given an invalid password" do
-        raise
+        user.save
+        expect(User.authenticate_with_credentials('jdoe@test.com', '123')).to eq nil
       end
     end
   end
