@@ -2,44 +2,56 @@ require 'rails_helper'
 
 RSpec.describe Product, type: :model do
 
+  let(:category) {Category.new(name: 'Gardening')}
+  let(:product) {Product.new(
+    name: 'Garden Gnome',
+    price: 29.99,
+    quantity: 5,
+    category_id: category.id
+  )}
+
   describe 'Validations' do
 
-    it "saves successfully given a product with all fields filled" do
-      category = Category.new(name: 'Gardening')
-      product = Product.new(name: 'Garden Gnome', price: 29.99, quantity: 5, category: category)
-      expect{product.save}.to change{Product.count}.by(1)
+    context "All fields valid" do
+      it "saves successfully given a product with all fields filled" do
+        category.save
+        expect{product.save}.to change{Product.count}.by(1)
+      end
     end
 
-    it "returns missing name error if the name field is nil" do
-      category = Category.new(name: 'Gardening')
-      product = Product.new(price: 29.99, quantity: 5, category: category)
-      product.save
-      expect(product).to_not be_valid
-      expect(product.errors.messages[:name]).to eq ["can't be blank"]
+    context "Missing fields" do
+      it "returns error if the name field is nil" do
+        category.save
+        product.name = nil
+        product.save
+        expect(product).to_not be_valid
+        expect(product.errors.full_messages).to eq ["Name can't be blank"]
+      end
+  
+      it "returns error if the price field is nil" do
+        category.save
+        product.price_cents = nil
+        product.save
+        expect(product).to_not be_valid
+        expect(product.errors.full_messages).to include "Price can't be blank"
+      end
+  
+      it "returns error if the quantity field is nil" do
+        category.save
+        product.quantity = nil
+        puts product.inspect
+        product.save
+        expect(product).to_not be_valid
+        expect(product.errors.full_messages).to eq ["Quantity can't be blank"]
+      end
+      
+      it "returns error if the category field is nil" do
+        product.save
+        expect(product).to_not be_valid
+        expect(product.errors.full_messages).to eq ["Category can't be blank"]
+      end
     end
 
-    it "returns missing price error if the price field is nil" do
-      category = Category.new(name: 'Gardening')
-      product = Product.new(name: 'Garden Gnome', quantity: 5, category: category)
-      product.save
-      expect(product).to_not be_valid
-      expect(product.errors.messages[:price]).to eq ["is not a number", "can't be blank"]
-    end
-
-    it "returns missing quantity error if the quantity field is nil" do
-      category = Category.new(name: 'Gardening')
-      product = Product.new(name: 'Garden Gnome', price: 29.99, category: category)
-      product.save
-      expect(product).to_not be_valid
-      expect(product.errors.messages[:quantity]).to eq ["can't be blank"]
-    end
-    
-    it "returns missing category error if the category field is nil" do
-      product = Product.new(name: 'Garden Gnome', price: 29.99, quantity: 5)
-      product.save
-      expect(product).to_not be_valid
-      expect(product.errors.messages[:category]).to eq ["can't be blank"]
-    end
 
   end
   
