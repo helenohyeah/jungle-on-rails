@@ -62,4 +62,20 @@ RSpec.describe User, type: :model do
 
   end
 
+  describe '.authenticate_with_credentials' do
+    
+    it "returns the user given a valid email and password" do
+    end
+
+    it "returns the user given an email in the wrong case and valid password" do
+    end
+
+    it "returns the user given an email with filler spaces and valid password" do
+    end
+
+    it "returns nil given an invalid email" do
+    end
+
+  end
+
 end
