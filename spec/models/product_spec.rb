@@ -39,7 +39,6 @@ RSpec.describe Product, type: :model do
       it "returns error if the quantity field is nil" do
         category.save
         product.quantity = nil
-        puts product.inspect
         product.save
         expect(product).to_not be_valid
         expect(product.errors.full_messages).to eq ["Quantity can't be blank"]
