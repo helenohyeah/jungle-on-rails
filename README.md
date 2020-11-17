@@ -1,6 +1,35 @@
 # Jungle
 
-A mini e-commerce application built with Rails 4.2 for purposes of teaching Rails by example.
+A mini e-commerce application built with Ruby on Rails 4.2.
+
+Tested using RSPEC, Capybara (using Poltergeist as a driver)
+
+## Features
+User:
+- Add products to cart
+- Purchase products (using Stripe)
+- Sold out badge when products are out of stock
+- Create an account and login
+
+Admin:
+- secured with HTTP basic authentication (user: Jungle, password: book)
+- Dashboard showing product quantities and categories
+- Add new products
+- Add new categories
+
+## Screenshots
+
+View all products from the home page
+![Home page](https://github.com/helenohyeah/jungle-rails/blob/master/docs/home-page.png?raw=true)
+Add items to cart and purchase with a credit card (powered by Stripe) and view your order confirmation
+![My cart page](https://github.com/helenohyeah/jungle-rails/blob/master/docs/my-cart.png?raw=true)
+![Order confirmation page](https://github.com/helenohyeah/jungle-rails/blob/master/docs/order-confirmation.png?raw=true)
+
+### Admin Portal
+View quantities of products
+![Admin dashboard page](https://github.com/helenohyeah/jungle-rails/blob/master/docs/admin-dashboard.png?raw=true)
+Create new products and categories
+![Admin create new product page](https://github.com/helenohyeah/jungle-rails/blob/master/docs/admin-new-product.png?raw=true)
 
 
 ## Setup
